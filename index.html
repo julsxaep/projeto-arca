@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto ARCA - Adoção</title>
+    <title>Projeto ARCA - Solicitações</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -13,13 +13,12 @@
 
     <header>
         <div class="logo">Projeto ARCA</div>
-
         <nav>
             <ul>
                 <li><a href="#">Agende sua Consulta</a></li>
-                <li><a href="adocao.html">Adoção</a></li>
+                <li><a href="#">Adoção</a></li>
                 <li><a href="#">Denúncia</a></li>
-                <li><a href="#">Solicitações</a></li>
+                <li><a href="#" class="active">Solicitações</a></li>
                 <li><a href="#">Saiba Mais</a></li>
                 <li>
                     <div class="perfil">
@@ -30,54 +29,87 @@
         </nav>
     </header>
 
-    <main class="animal-container">
-
-        <section class="animal-card">
-
-            <div class="animal-foto" onclick="document.getElementById('upload-foto').click();" title="Clique para alterar a foto">
-                <input type="file" id="upload-foto" accept="image/*" style="display: none;">
-                <img id="foto-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Clique para adicionar uma foto">
+    <main class="solicitacoes-container">
+        
+        <section class="filtro-abas">
+            <h2>Visualizar solicitações de:</h2>
+            <div class="abas-grupo">
+                <button class="aba-btn active" onclick="alternarAba(this)">Castração</button>
+                <button class="aba-btn" onclick="alternarAba(this)">Vacinação</button>
+                <button class="aba-btn" onclick="alternarAba(this)">Consulta</button>
+                <button class="aba-btn" onclick="alternarAba(this)">Adoção</button>
+                <button class="aba-btn" onclick="alternarAba(this)">Denúncia</button>
             </div>
-
-            <div class="animal-info">
-                <div class="form-group">
-                    <label>Nome:</label>
-                    <input type="text" value="Thor">
-                </div>
-
-                <div class="form-group">
-                    <label>Gênero:</label>
-                    <input type="text" value="Macho">
-                </div>
-
-                <div class="form-group">
-                    <label>Idade:</label>
-                    <input type="text" value="3 anos">
-                </div>
-
-                <div class="form-group">
-                    <label>Necessidade especial:</label>
-                    <input type="text" value="Não possui">
-                </div>
-
-                <div class="form-group">
-                    <label>Porte:</label>
-                    <input type="text" value="Médio">
-                </div>
-            </div>
-
-            <div class="animal-descricao">
-                <label class="desc-title">Descrição:</label>
-                <textarea rows="4">Thor é um cachorro muito dócil, brincalhão e sociável. Procura uma família que possa oferecer carinho, atenção e um lar cheio de amor.</textarea>
-            </div>
-
-            <div class="adotar-btn">
-                <button class="btn-adotar">
-                    Desejo adotar
-                </button>
-            </div>
-
         </section>
+
+        <div class="painel-conteudo">
+            
+            <div class="coluna-esquerda">
+                <div class="card-agendamento">
+                    <div class="card-header-info">
+                        <span class="titulo-agendamento">Nome do agendamento</span>
+                        <span class="codigo-agendamento">#xxxxx</span>
+                    </div>
+                    <span class="status-badge">Em andamento</span>
+                </div>
+
+                <div class="box-confirmacao" id="box-confirmacao">
+                    <h3>Você tem certeza?</h3>
+                    <div class="botoes-confirmacao">
+                        <button class="btn-nao" onclick="responderConfirmacao(false)">Não</button>
+                        <button class="btn-sim" onclick="responderConfirmacao(true)">Sim</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="coluna-direita">
+                <section class="painel-detalhes">
+                    <h2>Solicitação: <span id="tipo-solicitacao-titulo">tipo de acesso</span></h2>
+                    <p class="usuario-info">Fulano Alves Júnior - 099.876.234-67</p>
+
+                    <div class="campo-detalhe">
+                        <label>Informações sobre a solicitação:</label>
+                        <textarea rows="3" placeholder="Digite as informações..."></textarea>
+                    </div>
+
+                    <div class="campo-detalhe campo-data">
+                        <label>Data:</label>
+                        <input type="text" value="12/05/2026" placeholder="DD/MM/AAAA">
+                    </div>
+
+                    <div class="campo-detalhe">
+                        <label>Atualizações:</label>
+                        <textarea rows="4" placeholder="Adicione atualizações..."></textarea>
+                    </div>
+
+                    <div class="acoes-detalhe">
+                        <label class="btn-anexar">
+                            <input type="file" style="display: none;" id="input-arquivo">
+                            Anexar arquivo
+                        </label>
+
+                        <div class="select-status-container">
+                            <select class="select-status">
+                                <option value="andamento">Status da solicitação</option>
+                                <option value="analise">Em análise</option>
+                                <option value="aprovado">Aprovado</option>
+                                <option value="rejeitado">Recusado</option>
+                            </select>
+                            <div class="select-seta">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-btn-confirmar">
+                        <button type="button" class="btn-enviar-dados" onclick="solicitarConfirmacao()">
+                            Confirmar
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+        </div>
 
     </main>
 
@@ -89,15 +121,29 @@
     </footer>
 
     <script>
-        document.getElementById('upload-foto').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('foto-preview');
-                    preview.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
+        function alternarAba(botao) {
+            document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('active'));
+            botao.classList.add('active');
+            document.getElementById('tipo-solicitacao-titulo').innerText = botao.innerText.toLowerCase();
+        }
+
+        function solicitarConfirmacao() {
+            const box = document.getElementById('box-confirmacao');
+            box.classList.add('visible');
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function responderConfirmacao(resposta) {
+            const box = document.getElementById('box-confirmacao');
+            if(resposta) {
+                alert("Dados gravados e confirmados com sucesso!");
+            }
+            box.classList.remove('visible');
+        }
+
+        document.getElementById('input-arquivo').addEventListener('change', function() {
+            if(this.files.length > 0) {
+                alert("Arquivo '" + this.files[0].name + "' anexado!");
             }
         });
     </script>
